@@ -13,6 +13,16 @@ public class Monstre extends Personnage{
     }
 
     @Override
+    public int attaquer() {
+        return 0;
+    }
+
+    @Override
+    public void afficherEtat() {
+        System.out.println(this);
+    }
+
+    @Override
     public String toString() {
         return "Monstre " + nom +
                 " (est " + temperament +

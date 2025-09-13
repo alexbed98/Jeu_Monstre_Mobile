@@ -11,6 +11,16 @@ public class Héros extends Personnage{
     }
 
     @Override
+    public int attaquer() {
+        return 0;
+    }
+
+    @Override
+    public void afficherEtat() {
+        System.out.println(this);
+    }
+
+    @Override
     public String toString() {
         return "Héros " + nom +
                 " (" + ObtenirGenre() +
