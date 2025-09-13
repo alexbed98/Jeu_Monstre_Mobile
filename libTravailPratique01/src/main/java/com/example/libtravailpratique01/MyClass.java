@@ -5,9 +5,10 @@ public class MyClass {
     public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
 
-        // initialisé a zero pour commencer en dehors de la boucle de validation
-        // et donc entrer dedans
-        int genreHero = 0;
+        // variables initialisées a zero pour permettre d'entrer dans
+        // la boucle de validation
+        int genreHero = 1;  // valeur temporaire pour tester ***** doit etre remi a 0 *************
+        int nombreMonstre = 10; // valeur temporaire pour tester ***** doit etre remi a 0 *********
 
         // constantes pour les constructeurs
         final int pointDeVieHero = 4;
@@ -18,23 +19,42 @@ public class MyClass {
         // Demande des parametres a l'utilisateur
         System.out.println("*********** Démarrage du jeu ***********");
         System.out.print("Entrez le nom du héro: ");
-        String nomHero = scanner.nextLine();
+        String nomHero = "alex";//scanner.nextLine();
         System.out.println("Entrez le genre du héro: ");
 
         while (genreHero < 1 || genreHero > 3) {
             System.out.print("homme [1], femme [2], non spécifié [3]: ");
             genreHero = scanner.nextInt();
         }
+        //scanner.nextLine(); // *********************************** mit en commentaire pour tester
 
-        scanner.nextLine();
         System.out.print("Entrez la race des monstres: ");
-        String raceMonstres = scanner.nextLine();
+        String raceMonstres = "trolls";//scanner.nextLine();
 
-        System.out.print("Combien de monstre voulez-vous affronter: ");
-        int nombreMonstre = scanner.nextInt();
-        scanner.nextLine();
+        while (nombreMonstre < 1 || nombreMonstre > 20) {
+            System.out.println("Combien de monstre voulez-vous affronter? ");
+            System.out.print("Entrez une valeur entre 1 et 20: ");
+            nombreMonstre = scanner.nextInt();
+        }
+        //scanner.nextLine(); // *********************************** mit en commentaire pour tester
 
         // Generation du hero
+        Héros hero = new Héros(munitionHero, pointDeVieHero, nomHero, genreHero);
 
+        // Generation des monstres et d'un tableau de monstre
+        Monstre[] monstresEnVie = new Monstre[nombreMonstre];
+
+        for (int i = 0; i < nombreMonstre; i++){
+            monstresEnVie[i] = new Monstre(munitionMonstre,
+                    pointDeVieMonstre, i + 1, raceMonstres);
+        }
+
+        System.out.println("Le héros doit se battre contre");
+        for (Monstre monstre : monstresEnVie){
+            System.out.println(monstre);
+        }
+
+        scanner.nextLine();
+        System.out.println(hero);
     }
 }
