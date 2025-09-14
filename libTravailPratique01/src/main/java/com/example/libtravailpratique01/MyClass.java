@@ -1,4 +1,8 @@
+// Alex Bedard
+// TP1 Programmation d'applications mobiles
+
 package com.example.libtravailpratique01;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MyClass {
@@ -17,7 +21,9 @@ public class MyClass {
         final int munitionMonstre = 1;
 
         // pour compter et afficher le "round"
-        int compteurDeTour = 0;
+        int compteurDeTour = 1;
+
+        int monstresTues = 0;
 
         // pour boucler le jeu tant que faux
         boolean jeuEnCours = true;
@@ -47,12 +53,12 @@ public class MyClass {
         // Generation du hero
         Héros hero = new Héros(munitionHero, pointDeVieHero, nomHero, genreHero);
 
-        // Generation des monstres et d'un tableau de monstre
-        Monstre[] monstresEnVie = new Monstre[nombreMonstre];
+        // Generation des monstres et d'une liste de monstre
+        ArrayList<Monstre> monstresEnVie = new ArrayList<>();
 
         for (int i = 0; i < nombreMonstre; i++){
-            monstresEnVie[i] = new Monstre(munitionMonstre,
-                    pointDeVieMonstre, i + 1, raceMonstres);
+            monstresEnVie.add(new Monstre(munitionMonstre,
+                    pointDeVieMonstre, i + 1, raceMonstres));
         }
 
         // Presentation des monstres
@@ -66,11 +72,10 @@ public class MyClass {
         // Boucle de jeu principal
         do {
             System.out.println();
-
             hero.afficherEtat();
-
             System.out.println("** À l'attaque - " + compteurDeTour + " **" );
 
+            // prise du nombre de munition avec validation
             System.out.print(("Le héro veut attaquer avec combien de munitions: "));
             int munitionUtilise = scanner.nextInt();
             while (munitionUtilise > hero.munition || munitionUtilise < 1){
@@ -80,12 +85,33 @@ public class MyClass {
                 munitionUtilise = scanner.nextInt();
             }
 
+            // attaque du hero dans une boucle (selon le nombre de munition utilise)
+            // pour le if c'est une methode qui retourne un bool de 50% de chance
+            for (int i = 0; i < munitionUtilise; i++){
+                if (Algos.EstReussi()){
+                    // on enleve de la liste de monstre a l'index qui est
+                    // choisi au hasard selon la longueur de la liste
+                    monstresEnVie.remove(Algos.ObtenirRandom(monstresEnVie.size()));
+                    monstresTues++;
+                }
+            }
+
+
+
+            // affichage du nombre de monstres tues et reinitialisation
+            // du nombre a zero pour la prochaine manche
+            System.out.println(monstresTues + " monstre(s) éliminé(s)!");
+            monstresTues = 0;
 
             scanner.nextLine();
-
+            System.out.println("Voici les monstres encore en vie:");
             for (Monstre monstre : monstresEnVie){
                 monstre.afficherEtat();
             }
+
+            System.out.println();
+            System.out.println("Appuyer sur [ENTER] pour continuer");
+            scanner.nextLine();
 
             hero.pointDeVie = 0;
 
@@ -101,7 +127,7 @@ public class MyClass {
                 jeuEnCours = false;
                 System.exit(0);
             }
-            else if (monstresEnVie.length < 1){
+            else if (monstresEnVie.size() < 1){
                 System.out.println();
                 System.out.println("Fin du jeu - Le héros a tué tous les monstres - Bravo!");
                 jeuEnCours = false;

@@ -1,3 +1,6 @@
+// Alex Bedard
+// TP1 Programmation d'applications mobiles
+
 package com.example.libtravailpratique01;
 
 public class Héros extends Personnage{
@@ -11,8 +14,13 @@ public class Héros extends Personnage{
     }
 
     @Override
-    public int attaquer() {
-        return 0;
+    public int attaquer(int munitionUtilise) {
+        if (Algos.EstReussi()){
+            return 2;
+        }
+        else{
+            return 1;
+        }
     }
 
     @Override

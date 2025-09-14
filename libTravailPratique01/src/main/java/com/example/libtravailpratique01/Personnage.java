@@ -1,3 +1,6 @@
+// Alex Bedard
+// TP1 Programmation d'applications mobiles
+
 package com.example.libtravailpratique01;
 
 public abstract class Personnage implements Ijeu {

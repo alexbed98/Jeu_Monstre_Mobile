@@ -1,3 +1,6 @@
+// Alex Bedard
+// TP1 Programmation d'applications mobiles
+
 package com.example.libtravailpratique01;
 
 public class Monstre extends Personnage{
@@ -13,7 +16,7 @@ public class Monstre extends Personnage{
     }
 
     @Override
-    public int attaquer() {
+    public int attaquer(int munitionUtilise) {
         return 0;
     }
 
