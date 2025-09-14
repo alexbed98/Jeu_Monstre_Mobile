@@ -64,7 +64,7 @@ public class MyClass {
         // Presentation des monstres
         System.out.println();
         System.out.println();
-        System.out.println("Le héros doit se battre contre");
+        System.out.println("Le héros doit se battre contre:");
         for (Monstre monstre : monstresEnVie){
             monstre.afficherEtat();
         }
@@ -73,7 +73,7 @@ public class MyClass {
         do {
             System.out.println();
             hero.afficherEtat();
-            System.out.println("** À l'attaque - " + compteurDeTour + " **" );
+            System.out.println("*** Round " + compteurDeTour + " ***" );
 
             // prise du nombre de munition avec validation
             System.out.print(("Le héro veut attaquer avec combien de munitions: "));
@@ -85,55 +85,70 @@ public class MyClass {
                 munitionUtilise = scanner.nextInt();
             }
 
-            // attaque du hero dans une boucle (selon le nombre de munition utilise)
-            // pour le if c'est une methode qui retourne un bool de 50% de chance
-            for (int i = 0; i < munitionUtilise; i++){
-                if (Algos.EstReussi()){
-                    // on enleve de la liste de monstre a l'index qui est
-                    // choisi au hasard selon la longueur de la liste
-                    monstresEnVie.remove(Algos.ObtenirRandom(monstresEnVie.size()));
-                    monstresTues++;
-                }
+            // attaque du hero
+            monstresTues = hero.attaquer(munitionUtilise);
+            // pour eviter qu'on affiche plus de monstres tues qu'il
+            // n'en reste reellement
+            if (monstresTues > monstresEnVie.size()){
+                monstresTues = monstresEnVie.size();
             }
 
-
+            // mise a jour de la liste de monstres
+            for (int i = 0; i < monstresTues && monstresEnVie.size() > 0; i++) {
+                monstresEnVie.remove(Algos.ObtenirRandom(monstresEnVie.size()));
+            }
 
             // affichage du nombre de monstres tues et reinitialisation
             // du nombre a zero pour la prochaine manche
             System.out.println(monstresTues + " monstre(s) éliminé(s)!");
             monstresTues = 0;
 
-            scanner.nextLine();
-            System.out.println("Voici les monstres encore en vie:");
-            for (Monstre monstre : monstresEnVie){
-                monstre.afficherEtat();
+            // verification si il reste des monstres, si oui on les affiche
+            // si non on termine le programme a la fin de la boucle
+            if (monstresEnVie.size() > 0) {
+                System.out.println("Voici les monstres encore en vie:");
+                for (Monstre monstre : monstresEnVie) {
+                    monstre.afficherEtat();
+                }
             }
-
-            System.out.println();
-            System.out.println("Appuyer sur [ENTER] pour continuer");
-            scanner.nextLine();
-
-            hero.pointDeVie = 0;
-
-            if (hero.pointDeVie < 1 ){
+            else {
                 System.out.println();
-                System.out.println("Fin du jeu - Le héros est mort");
+                System.out.println("Le héros a tué tous les monstres");
+                System.out.println("Fin du jeu - Bravo!");
                 jeuEnCours = false;
-                System.exit(0);
             }
-            else if (hero.munition < 1){
+
+            // on verifie si le hero a encore des munitions, car si non
+            // le programme se termineras a la fin de la boucle
+            if (jeuEnCours && hero.munition < 1) {
                 System.out.println();
                 System.out.println("Fin du jeu - Le héros n'a plus de munition");
                 jeuEnCours = false;
-                System.exit(0);
-            }
-            else if (monstresEnVie.size() < 1){
-                System.out.println();
-                System.out.println("Fin du jeu - Le héros a tué tous les monstres - Bravo!");
-                jeuEnCours = false;
-                System.exit(0);
             }
 
+            if (jeuEnCours) {
+                compteurDeTour++;
+                System.out.println();
+                System.out.println("Appuyer sur [ENTER] pour passer au tour des monstres");
+                scanner.nextLine();
+                scanner.nextLine();
+            }
+
+            if (jeuEnCours && monstresEnVie.size() > 0){
+                int numeroMonstre = Algos.ObtenirRandom(monstresEnVie.size());
+                Monstre monstreAttaquant = monstresEnVie.get(numeroMonstre);
+                int dommageHero = monstreAttaquant.attaquer(munitionMonstre);
+                hero.pointDeVie = hero.pointDeVie - dommageHero;
+
+                String resultat = (dommageHero == 1) ? "héros blessé!" : "héros indemne!";
+                System.out.println("Attaque du monstre " + numeroMonstre + " --> " + resultat);
+            }
+
+            if (jeuEnCours && hero.pointDeVie < 1 ) {
+                System.out.println();
+                System.out.println("Fin du jeu - Le héros est mort");
+                jeuEnCours = false;
+            }
         } while (jeuEnCours);
     }
 }

@@ -11,9 +11,11 @@ public class Algos {
         return (ObtenirRandom(2) == 0) ? "Gentil" : "Méchant";
     }
 
-    public static boolean EstReussi(){
-        // meme principe que pour obtenirTemperament
-        return (ObtenirRandom(2) == 0) ? true : false;
+    public static boolean EstReussi(int chance){
+        if (ObtenirRandom(100) < chance){
+            return true;
+        }
+        return false;
     }
 
     public static int ObtenirRandom(int nombre){

@@ -3,10 +3,13 @@
 
 package com.example.libtravailpratique01;
 
+import java.util.Objects;
+
 public class Monstre extends Personnage{
     int nom;
     String race;
     String temperament;
+    final int chance = 50;
 
     public Monstre(int munition, int pointDeVie, int nom, String race) {
         super(munition, pointDeVie);
@@ -17,7 +20,16 @@ public class Monstre extends Personnage{
 
     @Override
     public int attaquer(int munitionUtilise) {
-        return 0;
+        int dommageSurHero = 0;
+
+        if (munition > 0 &&
+                Objects.equals(temperament, "Méchant") &&
+                Algos.EstReussi(chance)){
+                    dommageSurHero++;
+                    munition--;
+        }
+
+        return dommageSurHero;
     }
 
     @Override
@@ -29,7 +41,7 @@ public class Monstre extends Personnage{
     public String toString() {
         return "Monstre " + nom +
                 " (est " + temperament +
-                " ) de race " + race +
+                ") de race " + race +
                 " a " + munition +
                 " munition et une santé de " +
                 pointDeVie + "/1";

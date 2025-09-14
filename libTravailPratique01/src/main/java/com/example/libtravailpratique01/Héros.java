@@ -6,6 +6,7 @@ package com.example.libtravailpratique01;
 public class Héros extends Personnage{
     String nom;
     int genre;
+    int chance = 50;
 
     public Héros(int munition, int pointDeVie, String nom, int genre) {
         super(munition, pointDeVie);
@@ -15,12 +16,15 @@ public class Héros extends Personnage{
 
     @Override
     public int attaquer(int munitionUtilise) {
-        if (Algos.EstReussi()){
-            return 2;
+        int nombreMonstreTue = 0;
+        for (int i = 0; i < munitionUtilise; i++){
+            if (Algos.EstReussi(chance)){
+                nombreMonstreTue++;
+            }
+            munition--;
         }
-        else{
-            return 1;
-        }
+        chance++;
+        return nombreMonstreTue;
     }
 
     @Override
