@@ -9,7 +9,6 @@ public class Monstre extends Personnage{
     int nom;
     String race;
     String temperament;
-    final int chance = 50;
 
     public Monstre(int munition, int pointDeVie, int nom, String race) {
         super(munition, pointDeVie);
@@ -23,12 +22,10 @@ public class Monstre extends Personnage{
         int dommageSurHero = 0;
 
         if (munition > 0 &&
-                Objects.equals(temperament, "Méchant") &&
-                Algos.EstReussi(chance)){
-                    dommageSurHero++;
+                Objects.equals(temperament, "Méchant")){
+                    dommageSurHero = 1;
                     munition--;
         }
-
         return dommageSurHero;
     }
 

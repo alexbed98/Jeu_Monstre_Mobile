@@ -12,7 +12,7 @@ public class MyClass {
         // variables initialisées a zero pour permettre d'entrer dans
         // la boucle de validation
         int genreHero = 1;  // valeur temporaire pour tester ***** doit etre remi a 0 *************
-        int nombreMonstre = 10; // valeur temporaire pour tester ***** doit etre remis a 0 *********
+        int nombreMonstre = 10; // valeur temporaire pour tester ***** doit etre remis a 0 ********
 
         // constantes pour les constructeurs
         final int pointDeVieHero = 4;
@@ -106,7 +106,7 @@ public class MyClass {
             // verification si il reste des monstres, si oui on les affiche
             // si non on termine le programme a la fin de la boucle
             if (monstresEnVie.size() > 0) {
-                System.out.println("Voici les monstres encore en vie:");
+                System.out.println("Voici les " + monstresEnVie.size() + " monstres encore en vie:");
                 for (Monstre monstre : monstresEnVie) {
                     monstre.afficherEtat();
                 }
@@ -134,14 +134,15 @@ public class MyClass {
                 scanner.nextLine();
             }
 
+            // attaque des monstres
             if (jeuEnCours && monstresEnVie.size() > 0){
                 int numeroMonstre = Algos.ObtenirRandom(monstresEnVie.size());
                 Monstre monstreAttaquant = monstresEnVie.get(numeroMonstre);
                 int dommageHero = monstreAttaquant.attaquer(munitionMonstre);
-                hero.pointDeVie = hero.pointDeVie - dommageHero;
+                hero.pointDeVie -= dommageHero;
 
                 String resultat = (dommageHero == 1) ? "héros blessé!" : "héros indemne!";
-                System.out.println("Attaque du monstre " + numeroMonstre + " --> " + resultat);
+                System.out.println("Attaque du monstre " + monstreAttaquant.nom + " --> " + resultat);
             }
 
             if (jeuEnCours && hero.pointDeVie < 1 ) {
