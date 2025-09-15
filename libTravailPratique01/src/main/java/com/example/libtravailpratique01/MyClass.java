@@ -51,7 +51,7 @@ public class MyClass {
         //scanner.nextLine(); // *********************************** mit en commentaire pour tester
 
         // Generation du hero
-        Héros hero = new Héros(munitionHero, pointDeVieHero, nomHero, genreHero);
+        Heros hero = new Heros(munitionHero, pointDeVieHero, nomHero, genreHero);
 
         // Generation des monstres et d'une liste de monstre
         ArrayList<Monstre> monstresEnVie = new ArrayList<>();

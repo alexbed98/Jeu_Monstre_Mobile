@@ -3,12 +3,12 @@
 
 package com.example.libtravailpratique01;
 
-public class Héros extends Personnage{
+public class Heros extends Personnage{
     String nom;
     int genre;
     int chance = 50;
 
-    public Héros(int munition, int pointDeVie, String nom, int genre) {
+    public Heros(int munition, int pointDeVie, String nom, int genre) {
         super(munition, pointDeVie);
         this.nom = nom;
         this.genre = genre;
